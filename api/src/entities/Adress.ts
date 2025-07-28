@@ -12,10 +12,13 @@ export class Adress {
   @Column({ name: 'street_name', length: 300 })
   streetName: string;
 
+  @Column({ name: 'city', length: 150 })
+  city: string;
+
   @Column({ name: 'postal_code', length: 20 })
   postalCode: string;
 
-  @ManyToOne(() => Residence)
-  @JoinColumn({ name: 'residence_number' })
+  @ManyToOne(() => Residence, (residence) => residence.adresses)
+  @JoinColumn({ name: "residence_number" })
   residence: Residence;
 }

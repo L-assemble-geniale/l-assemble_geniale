@@ -1,6 +1,7 @@
 import { Entity, PrimaryColumn, ManyToOne, JoinColumn } from 'typeorm';
 import { Residence } from './Residence';
 import { Member } from './Member';
+import { Event } from './Event';
 
 @Entity('register')
 export class RegisterToEvent {
