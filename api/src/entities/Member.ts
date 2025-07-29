@@ -7,16 +7,16 @@ export class Member {
   @PrimaryGeneratedColumn({ name: 'member_number' })
   id: number;
 
-  @Column({ name: 'last_name', length: 100 })
+  @Column({ name: 'last_name', length: 100, nullable: false })
   lastName: string;
 
-  @Column({ name: 'first_name', length: 100 })
+  @Column({ name: 'first_name', length: 100, nullable: false })
   firstName: string;
 
   @Column({ type: 'int', nullable: true })
   age: number;
 
-  @Column({ length: 320, unique: true })
+  @Column({ length: 320, unique: true, nullable: false })
   email: string;
 
   @Column({ name: 'phone_number', length: 20, nullable: true })
@@ -25,7 +25,7 @@ export class Member {
   @Column({ name: 'appartment_number', length: 10, nullable: true })
   appartmentNumber: string;
 
-  @Column({ length: 255 })
+  @Column({ length: 255, nullable: false })
   password: string;
 
   @Column({ name: 'is_admin', default: false })

@@ -2,6 +2,7 @@ import express from "express";
 import cors from 'cors';
 import appDataSource from "./data-source";
 import residenceRouter from "./routes/ResidenceRoutes";
+import authRouter from "./routes/AuthRoutes";
 
 appDataSource.initialize().then(() => {
 
@@ -19,6 +20,7 @@ appDataSource.initialize().then(() => {
 
     //Routes
     app.use("/api/residence", residenceRouter);
+    app.use("/api/user", authRouter);
 
     const port = process.env.PORT || 8080;
     app.listen(port, () => {
