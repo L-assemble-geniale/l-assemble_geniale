@@ -61,7 +61,23 @@ export class AuthController {
         };
     };
 
+    // création de compte par invitation
 
+    // connexion
+    async login(req: Request, res: Response) {
+        try {
+            const { email, password } = req.body;
+            const result = await this.authService.login(email, password);
+            res.send({ status: "OK", data: result });
+        } catch (error) {
+            res.status(500).send({ status: "Failed", message: error });
+        }
+    }
+
+
+    // Deconnexion
+
+    // Suppression d'utilisateur
 
 
 }

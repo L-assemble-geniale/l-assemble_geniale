@@ -1,8 +1,8 @@
 import appDataSource from "../data-source";
-import { Adress } from "../entities/Adress";
 import { Member } from "../entities/Member";
 import { Residence } from "../entities/Residence";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 import { ResidenceService } from "./ResidenceService";
 
 type AddressInput = {
@@ -89,6 +89,31 @@ export class AuthService {
     // Création d'un membre relié à une résidence déjà existente
 
     // Connexion
+    async login(email: string, password: string) {
+        const user = await this.authRepository.findOne({
+            where: { email },
+            relations: ['residence'], // si besoin d'info sur la résidence
+        });
+
+        if (!user) {
+            throw new Error("Utilisateur non trouvé.");
+        }
+
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+        if (!isPasswordValid) {
+            throw new Error("Mot de passe invalide.");
+        }
+
+        const JWT_SECRET = process.env.JWT_SECRET;
+        if (!JWT_SECRET) {
+            throw new Error("JWT_SECRET n'est pas défini dans le .env");
+        }
+
+        const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: "10h" });
+
+        return { token, user };
+    }
+
 
     // Delete one user
     async delete(id: string) {
