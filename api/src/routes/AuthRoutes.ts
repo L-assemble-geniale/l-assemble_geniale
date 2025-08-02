@@ -10,6 +10,9 @@ authRouter.get("/", (req, res) => {
     authController.getAll(req, res);
 });
 
+// get all by residence
+
+
 // get one by id
 authRouter.get("/:id", (req, res) => {
     console.log("userRouter");
@@ -21,6 +24,13 @@ authRouter.post("/syndicRegister", (req, res) => {
     console.log("authRouter");
     authController.syndicRegister(req, res);
 });
+
+// Connexion
+authRouter.post("/login", (req, res) => {
+    console.log("authRouter");
+    authController.login(req, res);
+});
+
 
 export default authRouter;
 
