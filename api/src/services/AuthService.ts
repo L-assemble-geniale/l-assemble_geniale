@@ -86,7 +86,7 @@ export class AuthService {
         return bcrypt.hash(password, 10);
     }
 
-    // Création d'un membre relié à une résidence déjà existente
+    // Création de compte par invitation
 
     // Connexion
     async login(email: string, password: string) {
