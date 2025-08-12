@@ -1,21 +1,24 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 
-const JWT_SECRET = process.env.JWT_SECRET;
+declare module "express-serve-static-core" {
+  interface Request {
+    userId?: number;
+  }
+}
 
-export function authenticateToken(req: Request, res: Response, next: NextFunction) {
-    const authHeader = req.headers["authorization"];
-    const token = authHeader?.split(" ")[1];
+const JWT_SECRET = process.env.JWT_SECRET!;
 
-    if (!token) {
-        return res.status(401).json({ message: "Token manquant" });
-    }
+export function isAuth(req: Request, res: Response, next: NextFunction) {
+  try {
+    const auth = req.headers.authorization || "";
+    const token = auth.startsWith("Bearer ") ? auth.slice(7) : null;
+    if (!token) return res.status(401).json({ status: "Failed", message: "Token manquant" });
 
-    try {
-        const decoded = jwt.verify(token, JWT_SECRET);
-        (req as any).user = decoded;
-        next();
-    } catch (err) {
-        res.status(403).json({ message: "Token invalide" });
-    }
+    const payload = jwt.verify(token, JWT_SECRET) as { id: number };
+    req.userId = payload.id;
+    next();
+  } catch {
+    return res.status(401).json({ status: "Failed", message: "Token invalide" });
+  }
 }
