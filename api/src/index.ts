@@ -4,6 +4,7 @@ import appDataSource from "./data-source";
 import residenceRouter from "./routes/ResidenceRoutes";
 import authRouter from "./routes/AuthRoutes";
 import invitationRouter from "./routes/InvitationRoutes";
+import newsRouter from "./routes/NewsRoutes";
 
 appDataSource.initialize().then(() => {
 
@@ -23,6 +24,7 @@ appDataSource.initialize().then(() => {
     app.use("/api/residence", residenceRouter);
     app.use("/api/user", authRouter);
     app.use("/api/user", invitationRouter);
+    app.use("/api/news", newsRouter);
 
     const port = process.env.PORT || 8080;
     app.listen(port, () => {
@@ -32,4 +34,3 @@ appDataSource.initialize().then(() => {
     .catch((err) => {
         console.log(`Une erreur s'est produite :`, err);
     });
-
