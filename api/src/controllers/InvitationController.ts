@@ -1,47 +1,30 @@
 import { Request, Response } from "express";
 import { InvitationService } from "../services/InvitationService";
+import { AuthService } from "../services/AuthService";
+
 
 const invitationService = new InvitationService();
-
-interface AuthenticatedRequest extends Request {
-    userId?: number;
-}
+const authService = new AuthService();
 
 export class InvitationController {
-    async invite(req: AuthenticatedRequest, res: Response) {
-        try {
-            const { email, isAdmin } = req.body;
-            const senderId = Number(req.userId);
-
-            const invitation = await invitationService.createInvitation(senderId, email, isAdmin);
-            res.send({ status: "OK", data: invitation });
-        } catch (error) {
-            res.status(500).send({ status: "Failed", message: error });
-        }
+  async invite(req: Request, res: Response) {
+    try {
+      const senderId = req.userId!;
+      const { email, isAdmin } = req.body;
+      const inv = await invitationService.createInvitation(senderId, email, Boolean(isAdmin));
+      res.send({ status: "OK", data: inv });
+    } catch (e: any) {
+      res.status(500).send({ status: "Failed", message: e.message || "Erreur serveur" });
     }
+  }
 
-    async validateToken(req: Request, res: Response) {
-        try {
-            const { token } = req.params;
-            const invitation = await invitationService.validateToken(token);
-            res.send({ status: "OK", data: invitation });
-        } catch (error) {
-            res.status(400).send({ status: "Failed", message: error });
-        }
+  async registerByToken(req: Request, res: Response) {
+    try {
+      const { token } = req.body;
+      const user = await authService.registerWithToken(token, req.body);
+      res.status(201).send({ status: "OK", data: user });
+    } catch (e: any) {
+      res.status(400).send({ status: "Failed", message: e.message || "Inscription impossible" });
     }
-
-
-    async registerWithToken(req: Request, res: Response) {
-        try {
-            const { token } = req.params;
-            const userData = req.body;
-
-            const member = await invitationService.registerWithToken(token, userData);
-            res.send({ status: "OK", data: member });
-        } catch (error) {
-            res.status(400).send({ status: "Failed", message: error });
-        }
-    }
-
-
+  }
 }

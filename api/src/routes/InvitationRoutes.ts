@@ -1,19 +1,15 @@
 import express from "express";
 import { InvitationController } from "../controllers/InvitationController";
-import { authMiddleware } from "../middlewares/authMiddleware";
 import { isSyndic } from "../middlewares/SyndicMiddleware";
+import { isAuth } from "../middlewares/authMiddleware";
 
 const invitationRouter = express.Router();
 const invitationController = new InvitationController();
 
-invitationRouter.post("/invite", authMiddleware, isSyndic, (req, res) => {
-    invitationController.invite(req, res);
-});
+// créer une invitation (Syndic uniquement)
+invitationRouter.post("/invite", isAuth, isSyndic, (req, res) => invitationController.invite(req, res));
 
-invitationRouter.get("/invitation/:token", (req, res) => invitationController.validateToken(req, res));
-
-invitationRouter.post("/register/:token", (req, res) => invitationController.registerWithToken(req, res));
-
-
+// inscription depuis l'invitation (publique)
+invitationRouter.post("/auth/register-by-token", (req, res) => invitationController.registerByToken(req, res));
 
 export default invitationRouter;

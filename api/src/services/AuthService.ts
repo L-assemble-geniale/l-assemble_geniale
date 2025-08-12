@@ -4,6 +4,7 @@ import { Residence } from "../entities/Residence";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { ResidenceService } from "./ResidenceService";
+import { Invitation } from "../entities/Invitation";
 
 type AddressInput = {
     streetNumber: string;
@@ -17,8 +18,8 @@ export class AuthService {
     private authRepository = appDataSource.getRepository(Member);
     private residenceRepository = appDataSource.getRepository(Residence);
     private residenceService = new ResidenceService();
+    private invitationRepo = appDataSource.getRepository(Invitation);
 
-    // Get all residence
     //Get all users 
     async getAll() {
         console.log("UserService");
@@ -31,7 +32,7 @@ export class AuthService {
         return this.authRepository.findOneBy({ id: id });
     };
 
-    // Création du premier syndic d'une copro
+    // creation first syndic
     async registerSyndic(data: {
         residenceName: string;
         addresses: AddressInput[];
@@ -86,7 +87,39 @@ export class AuthService {
         return bcrypt.hash(password, 10);
     }
 
-    // Création de compte par invitation
+    // user creation by invitation
+    async registerWithToken(token: string, data: {
+        lastName: string; firstName: string; email: string; password: string;
+        phoneNumber?: string; age?: number; appartmentNumber?: string;
+    }) {
+        const invitation = await this.invitationRepo.findOne({
+            where: { token },
+            relations: ["residence"],
+        });
+
+        if (!invitation || invitation.isUsed) throw new Error("Invitation invalide ou déjà utilisée.");
+        if (invitation.expireAt && invitation.expireAt < new Date()) throw new Error("Invitation expirée.");
+
+        const hashed = await bcrypt.hash(data.password, 10);
+
+        const member = this.authRepository.create({
+            lastName: data.lastName,
+            firstName: data.firstName,
+            email: data.email,
+            phoneNumber: data.phoneNumber,
+            age: data.age,
+            appartmentNumber: data.appartmentNumber,
+            password: hashed,
+            isAdmin: invitation.isAdmin,
+            residence: invitation.residence,
+        });
+        await this.authRepository.save(member);
+
+        invitation.isUsed = true;
+        await this.invitationRepo.save(invitation);
+
+        return member;
+    }
 
     // Connexion
     async login(email: string, password: string) {
@@ -113,7 +146,6 @@ export class AuthService {
 
         return { token, user };
     }
-
 
     // Delete one user
     async delete(id: string) {
