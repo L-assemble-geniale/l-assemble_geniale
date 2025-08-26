@@ -1,6 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { Residence } from './Residence';
-import { Member } from './Member';
 
 @Entity('t_news')
 export class News {
@@ -16,11 +15,7 @@ export class News {
   @Column({ name: 'created_at', type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
 
-  @ManyToOne(() => Residence, residence => residence.news)
+  @ManyToOne(() => Residence, r => r.news, { nullable: false, onDelete: 'CASCADE' })
   @JoinColumn({ name: 'residence_number' })
   residence: Residence;
-
-  @ManyToOne(() => Member, member => member.news)
-  @JoinColumn({ name: 'member_number' })
-  author: Member;
 }
