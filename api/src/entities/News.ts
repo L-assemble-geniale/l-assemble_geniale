@@ -1,6 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { Residence } from './Residence';
-import { Member } from './Member';
 
 @Entity('t_news')
 export class News {
@@ -19,9 +18,4 @@ export class News {
   @ManyToOne(() => Residence, r => r.news, { nullable: false, onDelete: 'CASCADE' })
   @JoinColumn({ name: 'residence_number' })
   residence: Residence;
-
-  @ManyToOne(() => Member, m => m.news, { nullable: false, onDelete: 'SET NULL' })
-  @JoinColumn({ name: 'member_number' })
-  author: Member;
-
 }

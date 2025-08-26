@@ -1,20 +1,19 @@
 import appDataSource from "../data-source";
-import { Member } from "../entities/Member";
 import { News } from "../entities/News";
 import { Residence } from "../entities/Residence";
 
 export class NewsService {
 
     private newsRepository = appDataSource.getRepository(News);
-    private residenceRepo = appDataSource.getRepository(Residence);
-    private memberRepo = appDataSource.getRepository(Member);
 
     // Requests
     // Get all residence
     async getAll() {
-        console.log("newsService");
-        return this.newsRepository.find();
-    };
+        return this.newsRepository.find({
+            relations: ["residence"],
+            order: { createdAt: "DESC" },
+        });
+    }
 
     // Get one by id
     async getById(id: number) {
@@ -23,20 +22,12 @@ export class NewsService {
     };
 
     // Create
-    async create(input: { title: string; text: string; residenceId: number; authorId: number }) {
-        const residence = await this.residenceRepo.findOneBy({ id: input.residenceId });
-        if (!residence) throw new Error("Résidence introuvable");
-
-        const author = await this.memberRepo.findOneBy({ id: input.authorId });
-        if (!author) throw new Error("Auteur introuvable");
-
+    async create(input: { title: string; text: string; residenceId: number }) {
         const news = this.newsRepository.create({
             title: input.title,
             text: input.text,
-            residence,
-            author,
+            residence: { id: input.residenceId } as Residence,
         });
-
         return this.newsRepository.save(news);
     }
 

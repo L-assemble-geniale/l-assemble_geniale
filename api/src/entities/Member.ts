@@ -34,7 +34,4 @@ export class Member {
   @ManyToOne(() => Residence, residence => residence.members)
   @JoinColumn({ name: 'residence_number' })
   residence: Residence;
-
-  @OneToMany(() => News, news => news.author)
-  news: News[];
 }

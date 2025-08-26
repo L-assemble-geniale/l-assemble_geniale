@@ -31,13 +31,10 @@ export class newsContoller {
     async create(req: Request, res: Response) {
         try {
             const { title, text, residence } = req.body; 
-            const authorId = Number(req.body.authorId) || Number(req.userId);
-
             const created = await this.newsService.create({
                 title,
                 text,
                 residenceId: Number(residence),
-                authorId,
             });
 
             res.send({ status: "OK", data: created });
