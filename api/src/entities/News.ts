@@ -16,11 +16,12 @@ export class News {
   @Column({ name: 'created_at', type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
 
-  @ManyToOne(() => Residence, residence => residence.news)
+  @ManyToOne(() => Residence, r => r.news, { nullable: false, onDelete: 'CASCADE' })
   @JoinColumn({ name: 'residence_number' })
   residence: Residence;
 
-  @ManyToOne(() => Member, member => member.news)
+  @ManyToOne(() => Member, m => m.news, { nullable: false, onDelete: 'SET NULL' })
   @JoinColumn({ name: 'member_number' })
   author: Member;
+
 }

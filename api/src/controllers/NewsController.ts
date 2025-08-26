@@ -29,14 +29,22 @@ export class newsContoller {
 
     // Create one news 
     async create(req: Request, res: Response) {
-        console.log("newsContoller");
         try {
-            const news = await this.newsService.create(req.body);
-            res.send({ status: "OK", data: news });
-        } catch (error) {
-            res.status(500).send({ status: "Failed", message: error });
+            const { title, text, residence } = req.body; 
+            const authorId = Number(req.body.authorId) || Number(req.userId);
+
+            const created = await this.newsService.create({
+                title,
+                text,
+                residenceId: Number(residence),
+                authorId,
+            });
+
+            res.send({ status: "OK", data: created });
+        } catch (err: any) {
+            res.status(400).send({ status: "Failed", message: err.message || err });
         }
-    };
+    }
 
     // Update
     async update(req: Request, res: Response) {
