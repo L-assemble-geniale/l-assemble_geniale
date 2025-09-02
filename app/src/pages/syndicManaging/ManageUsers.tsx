@@ -1,5 +1,32 @@
-function ManageUsers() {
-  return <h1>Les résidents de ma copro</h1>;
-}
+import { useState } from "react";
+import InviteModal from "../../components/admin/InviteModal";
 
-export default ManageUsers;
+export default function ManageUsers() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div style={{ padding: 16 }}>
+      <div style={{ display: "flex", alignItems: "center", marginBottom: 16 }}>
+        <h1 style={{ margin: 0 }}>Gestion de résidents</h1>
+        <button
+          onClick={() => setOpen(true)}
+          style={{
+            marginLeft: 16,
+            padding: "10px 14px",
+            borderRadius: 10,
+            border: "none",
+            cursor: "pointer",
+            background: "#f59e0b",
+            color: "white",
+            fontWeight: 700,
+            boxShadow: "0 2px 0 #c2410c",
+          }}
+        >
+          Créer un nouveau compte
+        </button>
+      </div>
+
+      <InviteModal open={open} onClose={() => setOpen(false)} />
+    </div>
+  );
+}
