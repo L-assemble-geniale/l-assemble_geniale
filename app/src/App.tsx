@@ -11,27 +11,38 @@ import Recommandations from './pages/recommandations/Recommandation';
 import Category from './pages/recommandations/Category';
 import SyndicInscription from './pages/auth/inscription/SyndicInscription';
 import InviteInscription from './pages/auth/inscription/InviteInscription';
+import { useEffect } from 'react';
+import { setToken } from './services/AuthApi';
+import ProtectedRoute from './routes/ProtectedRoute';
 
-function App() {
+export default function App() {
+  useEffect(() => {
+    setToken(localStorage.getItem("auth_token"));
+  }, []);
 
   return (
-     <Router>
+    <Router>
       <Routes>
-        <Route path="/" element={<News />} />
-        <Route path="/news" element={<Connexion />} />
-        <Route path="/register/:token" element={<SyndicInscription />} />
+        {/* publiques */}
+        <Route path="/login" element={<Connexion />} />
+        <Route path="/register/syndic" element={<SyndicInscription />} />
         <Route path="/register/:token" element={<InviteInscription />} />
-        <Route path="/news" element={<News />} />
-        <Route path="/polls" element={<Polls />} />
-        <Route path="/events" element={<Events />} />
-        <Route path="/recommendations" element={<Category />} />
-        <Route path="/recommendations" element={<Recommandations />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/manage-users" element={<ManageUsers />} />
+
+        {/* protégées */}
+        <Route element={<ProtectedRoute />}>
+          <Route index element={<News />} />
+          <Route path="/news" element={<News />} />
+          <Route path="/polls" element={<Polls />} />
+          <Route path="/events" element={<Events />} />
+          <Route path="/recommendations" element={<Category />} />
+          <Route path="/recommendations" element={<Recommandations />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/manage-users" element={<ManageUsers />} />
+        </Route>
+
+        {/* 404 */}
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
-  )
+  );
 }
-
-export default App
