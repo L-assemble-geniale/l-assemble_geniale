@@ -34,3 +34,10 @@ export async function login(email: string, password: string) {
   }
   return { token: String(token), user };
 }
+
+export function logout() {
+  localStorage.removeItem("auth_token");
+  localStorage.removeItem("auth_user");
+  setToken(null);
+  location.assign("/login");
+}
