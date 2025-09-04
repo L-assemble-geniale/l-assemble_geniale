@@ -61,8 +61,6 @@ export class AuthController {
         };
     };
 
-    // création de compte par invitation
-
     // connexion
     async login(req: Request, res: Response) {
         try {
@@ -74,10 +72,15 @@ export class AuthController {
         }
     }
 
-
-    // Deconnexion
-
     // Suppression d'utilisateur
-
+    async delete(req: Request, res: Response) {
+        console.log("ResidenceContoller");
+        try {
+            const residence = await this.authService.delete(String(req.params.id));
+            res.send({ status: "OK", data: residence });
+        } catch (error) {
+            res.status(500).send({ status: "Failed", message: error });
+        }
+    };
 
 }
