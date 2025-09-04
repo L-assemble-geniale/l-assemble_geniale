@@ -10,9 +10,6 @@ authRouter.get("/", (req, res) => {
     authController.getAll(req, res);
 });
 
-// get all by residence
-
-
 // get one by id
 authRouter.get("/:id", (req, res) => {
     console.log("userRouter");
@@ -29,6 +26,12 @@ authRouter.post("/syndicRegister", (req, res) => {
 authRouter.post("/login", (req, res) => {
     console.log("authRouter");
     authController.login(req, res);
+});
+
+// Delete user
+authRouter.delete("/:id", (req, res) => {
+    console.log("authRouter");
+    authController.delete(req, res);
 });
 
 

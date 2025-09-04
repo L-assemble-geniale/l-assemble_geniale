@@ -125,7 +125,7 @@ export class AuthService {
     async login(email: string, password: string) {
         const user = await this.authRepository.findOne({
             where: { email },
-            relations: ['residence'], // si besoin d'info sur la résidence
+            relations: ['residence'],
         });
 
         if (!user) {
