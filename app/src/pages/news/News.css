@@ -1,0 +1,36 @@
+.news-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.news-list {
+  list-style: none;
+  padding: 0;
+}
+
+.news-card {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.news-card h2 {
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.news-card p {
+  color: #555;
+  line-height: 1.4;
+}
+
+.news-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  color: #888;
+  margin-top: 1rem;
+}
