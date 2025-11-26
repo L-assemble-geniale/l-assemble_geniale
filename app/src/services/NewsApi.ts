@@ -34,24 +34,20 @@ export const createNews = async (data: { title: string; text: string }): Promise
     residence: residenceId,
   };
 
-  console.log("▶️ Payload envoyé à /api/news :", payload);
-
   const res = await axios.post(API_URL, payload, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
-
   return res.data.data;
 };
 
 // Modifier une actu
-export const updateNews = async (id: number, data: Partial<News>) => {
+export const updateNews = async (id: number, data: { title: string; text: string }) => {
   const token = localStorage.getItem("auth_token");
   if (!token) throw new Error("Token manquant");
 
-  const res = await axios.put(`${API_URL}/${id}`, data, {
+  await axios.patch(`${API_URL}/${id}`, data, {
     headers: { Authorization: `Bearer ${token}` },
   });
-  return res.data.data;
 };

@@ -20,7 +20,15 @@ export default function NewsPage() {
   const closeModal = () => setIsModalOpen(false);
 
   const handleSave = (savedNews: News) => {
-    setNewsList((prev) => [savedNews, ...prev]);
+    setNewsList((prev) => {
+      const exists = prev.some((n) => n.id === savedNews.id);
+
+      if (exists) {
+        return prev.map((n) => (n.id === savedNews.id ? savedNews : n));
+      } else {
+        return [savedNews, ...prev];
+      }
+    });
   };
 
   useEffect(() => {
@@ -58,7 +66,18 @@ export default function NewsPage() {
         <ul className="news-list">
           {newsList.map((n) => (
             <li key={n.id} className="news-card">
-              <h2>{n.title}</h2>
+              <div>
+                <h2>{n.title}</h2>
+                <button
+                  className="btn-edit-news"
+                  onClick={() => {
+                    setNewsToEdit(n);
+                    setIsModalOpen(true);
+                  }}
+                >
+                  Modifier
+                </button>
+              </div>
               <p>{n.text}</p>
               <div className="news-meta">
                 <span>
@@ -77,6 +96,5 @@ export default function NewsPage() {
         newsToEdit={newsToEdit}
       />
     </div>
-
   );
 }
