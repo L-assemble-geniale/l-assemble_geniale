@@ -42,24 +42,30 @@ const NewsModalForm: React.FC<NewsModalProps> = ({
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    try {
-      let result: News;
-      if (newsToEdit) {
-        result = await updateNews(newsToEdit.id, formData);
-      } else {
-        result = await createNews(formData);
-      }
-      onSave(result);
-      onClose();
-    } catch (err) {
-      console.error("Erreur création actu :", err);
-      alert("Impossible d’enregistrer l’actualité");
-    } finally {
-      setIsSubmitting(false);
+  e.preventDefault();
+  setIsSubmitting(true);
+  try {
+    let result: News;
+
+    if (newsToEdit) {
+      await updateNews(newsToEdit.id, formData);
+      result = {
+        ...newsToEdit,
+        title: formData.title,
+        text: formData.text,
+      };
+    } else {
+      result = await createNews(formData);
     }
-  };
+    onSave(result);
+    onClose();
+  } catch (err) {
+    console.error("Erreur création/modification actu :", err);
+    alert("Impossible d’enregistrer l’actualité");
+  } finally {
+    setIsSubmitting(false);
+  }
+};
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
