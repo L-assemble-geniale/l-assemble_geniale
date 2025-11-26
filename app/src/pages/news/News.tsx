@@ -1,24 +1,27 @@
 import { useEffect, useState } from "react";
 import { getAllNews } from "../../services/NewsApi";
 import "./News.css";
+import type { News } from "../../entitées/NewEntity";
+import NewsModalForm from "../../components/newsModal/NewsModalForm";
 
-interface Residence {
-  id: number;
-  name: string;
-}
-
-interface News {
-  id: number;
-  title: string;
-  text: string;
-  createdAt: string;
-  residence: Residence;
-}
 
 export default function NewsPage() {
   const [newsList, setNewsList] = useState<News[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [newsToEdit, setNewsToEdit] = useState<News | null>(null);
+
+  const openCreateModal = () => {
+    setNewsToEdit(null);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => setIsModalOpen(false);
+
+  const handleSave = (savedNews: News) => {
+    setNewsList((prev) => [savedNews, ...prev]);
+  };
 
   useEffect(() => {
     const fetchNews = async () => {
@@ -47,26 +50,33 @@ export default function NewsPage() {
   return (
     <div className="news-container">
       <h1>Fil d’actualité</h1>
+
+      <button onClick={openCreateModal}>+</button>
       {newsList.length === 0 ? (
         <p>Aucune actualité pour le moment.</p>
       ) : (
         <ul className="news-list">
-          {newsList.map((news) => (
-            <li key={news.id} className="news-card">
-              <h2>{news.title}</h2>
-              <p>{news.text}</p>
+          {newsList.map((n) => (
+            <li key={n.id} className="news-card">
+              <h2>{n.title}</h2>
+              <p>{n.text}</p>
               <div className="news-meta">
                 <span>
-                  Résidence : <strong>{news.residence?.name}</strong>
-                </span>
-                <span>
-                  Publiée le {new Date(news.createdAt).toLocaleDateString()}
+                  Publiée le {new Date(n.createdAt).toLocaleDateString()}
                 </span>
               </div>
             </li>
           ))}
         </ul>
       )}
+
+      <NewsModalForm
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        onSave={handleSave}
+        newsToEdit={newsToEdit}
+      />
     </div>
+
   );
 }
