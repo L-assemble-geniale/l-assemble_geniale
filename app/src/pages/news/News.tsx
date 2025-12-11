@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getAllNews } from "../../services/NewsApi";
+import { deleteNews, getAllNews } from "../../services/NewsApi";
 import "./News.css";
 import type { News } from "../../entitées/NewEntity";
 import NewsModalForm from "../../components/newsModal/NewsModalForm";
@@ -30,6 +30,21 @@ export default function NewsPage() {
       }
     });
   };
+
+  const handleDelete = async (id: number) => {
+  const confirmDelete = window.confirm(
+    "Voulez-vous vraiment supprimer cette actualité ?"
+  );
+  if (!confirmDelete) return;
+
+  try {
+    await deleteNews(id);
+    setNewsList((prev) => prev.filter((n) => n.id !== id));
+  } catch (err) {
+    console.error("Erreur suppression actu :", err);
+    alert("Impossible de supprimer l’actualité");
+  }
+};
 
   useEffect(() => {
     const fetchNews = async () => {
@@ -68,15 +83,23 @@ export default function NewsPage() {
             <li key={n.id} className="news-card">
               <div>
                 <h2>{n.title}</h2>
-                <button
-                  className="btn-edit-news"
-                  onClick={() => {
-                    setNewsToEdit(n);
-                    setIsModalOpen(true);
-                  }}
-                >
-                  Modifier
-                </button>
+                <div className="modification-buttons">
+                  <button
+                    className="btn-edit-news"
+                    onClick={() => {
+                      setNewsToEdit(n);
+                      setIsModalOpen(true);
+                    }}
+                  >
+                    Modifier
+                  </button>
+                  <button
+                    className="btn-edit-news"
+                    onClick={() => handleDelete(n.id)}
+                  >
+                    Supprimer
+                  </button>
+                </div>
               </div>
               <p>{n.text}</p>
               <div className="news-meta">
