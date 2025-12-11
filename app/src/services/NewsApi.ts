@@ -51,3 +51,13 @@ export const updateNews = async (id: number, data: { title: string; text: string
     headers: { Authorization: `Bearer ${token}` },
   });
 };
+
+// Supprimer une actu
+export const deleteNews = async (id: number): Promise<void> => {
+  const token = localStorage.getItem("auth_token");
+  if (!token) throw new Error("Token manquant");
+
+  await axios.delete(`${API_URL}/${id}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+};
