@@ -2,15 +2,17 @@ import { Router } from "express";
 import { newsContoller } from "../controllers/NewsController";
 import { isSyndic } from "../middlewares/SyndicMiddleware";
 import { isAuth } from "../middlewares/authMiddleware";
+import { requireResidence } from "../middlewares/requireResidence";
 
 const newsRouter = Router();
 const newsController = new newsContoller
 
 // Get all
-newsRouter.get("/", isAuth, (req, res) => {
+newsRouter.get("/", isAuth, requireResidence, (req, res) => {
     console.log("newsRouter");
     newsController.getAll(req, res);
 });
+
 
 // get one by id
 newsRouter.get("/:id", isAuth, (req, res) => {

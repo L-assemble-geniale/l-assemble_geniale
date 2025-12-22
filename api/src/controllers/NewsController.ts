@@ -8,13 +8,14 @@ export class newsContoller {
     // Get all news 
     async getAll(req: Request, res: Response) {
         console.log("newsContoller");
-        try {
-            const news = await this.newsService.getAll();
-            res.send({ status: "OK", data: news });
-        } catch (error) {
-            res.status(500).send({ status: "Failed", message: error });
-        }
-    };
+        // requireResidence a garanti ça
+        const residenceId = req.residenceId;
+
+        const news = await this.newsService.getAllByResidence(residenceId!);
+
+        return res.json({ status: "OK", data: news });
+    }
+
 
     // Get one news by the id 
     async getById(req: Request, res: Response) {
@@ -30,7 +31,7 @@ export class newsContoller {
     // Create one news 
     async create(req: Request, res: Response) {
         try {
-            const { title, text, residence } = req.body; 
+            const { title, text, residence } = req.body;
             const created = await this.newsService.create({
                 title,
                 text,

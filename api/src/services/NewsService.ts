@@ -7,9 +7,19 @@ export class NewsService {
     private newsRepository = appDataSource.getRepository(News);
 
     // Requests
-    // Get all residence
+    // Get all news
     async getAll() {
         return this.newsRepository.find({
+            relations: ["residence"],
+            order: { createdAt: "DESC" },
+        });
+    }
+
+    // Get all news by residence
+    async getAllByResidence(residenceId: number) {
+        console.log("newsService");
+        return this.newsRepository.find({
+            where: { residence: { id: residenceId } },
             relations: ["residence"],
             order: { createdAt: "DESC" },
         });
