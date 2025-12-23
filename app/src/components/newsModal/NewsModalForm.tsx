@@ -72,7 +72,7 @@ const NewsModalForm: React.FC<NewsModalProps> = ({
       <form onSubmit={handleSubmit} className="formContent">
         <h2>{newsToEdit ? "Modifier l’actualité" : "Créer une actualité"}</h2>
 
-        <label>
+        <label className="field">
           Titre :
           <input
             name="title"
@@ -82,7 +82,7 @@ const NewsModalForm: React.FC<NewsModalProps> = ({
           />
         </label>
 
-        <label>
+        <label className="field">
           Contenu :
           <textarea
             name="text"
@@ -93,7 +93,7 @@ const NewsModalForm: React.FC<NewsModalProps> = ({
         </label>
 
         <button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? "Enregistrement..." : "Enregistrer"}
+          {isSubmitting ? "Enregistrement..." : "Poster"}
         </button>
       </form>
     </Modal>

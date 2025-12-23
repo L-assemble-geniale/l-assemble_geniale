@@ -6,115 +6,25 @@
 
 .formContent h2 {
     align-self: center;
-    font-size: 33px;
-    margin: 10px 0;
+    margin: 0.625rem 0;
 }
 
-.formContent label {
-    font-weight: bold;
-}
-
-.formLabel {
+.field {
+    font-weight: 600;
+    font-size: 1.25rem;
     display: flex;
     flex-direction: column;
-    margin: 10px 20px 10px 0;
+    gap: 0.625rem;
+    margin-bottom: 1.563rem;
 }
 
-.formLabel input,
-.formLabel select {
-    width: 100%;
-    border: 1px solid #FFAA00;
-    border-radius: 5px;
-    padding: 10px;
-    margin-top: 5px;
+.field textarea, .field input {
+    border: 2px solid; 
+    border-radius: 5px; 
+    font-size: clamp(0.875rem, 0.845rem + 0.24vw, 1.25rem);
+    padding: 9px;
 }
 
-.formSpec {
-    display: flex;
-    justify-content: space-between;
-}
-
-.formLabel textarea {
-    width: 100%;
-    border: 1px solid #FFAA00;
-    border-radius: 5px;
-    padding: 10px;
-    margin-top: 10px;
-    min-height: 150px;
-}
-
-.formSpecLabel {
-    flex: 1;
-}
-
-.categoryForm {
-    margin-right: 20px;
-}
-
-.taskContainer {
-    display: flex;
-    align-items: center;
-}
-
-input[type='checkbox']:checked:after {
-    content: '\2713';
-    color: white;
-    font-weight: 800;
-}
-
-input[type='checkbox'] {
-    text-align: center;
-    display: table-cell;
-    width: 20px;
-    height: 20px;
-    appearance: none;
-    border-radius: 10%;
-    box-shadow: none;
-    background-color: #FFAA00;
-    margin-left: 20px;
-}
-
-.submitButton {
-    background: #FFAA00;
-    transition: all 0.3s ease;
-    position: relative;
-    display: inline-block;
-    box-shadow: 20px 20px 30.2px rgba(0, 0, 0, 0.25);
-    padding: 8px;
-    margin: auto;
-    width: 100%;
-    margin-top: 20px;
-    cursor: pointer;
-    z-index: 1;
-    margin-bottom: 30px;
-    font-weight: bold;
-}
-
-.submitButton:hover {
-    background: #9B009E;
-}
-
-@media (max-width: 900px) {
-    .formSpec {
-        flex-direction: column;
-    }
-
-    .categoryForm {
-        margin-right: 0px;
-    }
-}
-
-@media (max-height: 800px) {
-    .formLabel textarea {
-        max-height: 100px;
-        min-height: 50px;
-    }
-
-    .formLabel {
-        margin: 5px 20px 5px 0;
-    }
-
-    .formLabel input {
-        margin-top: 5px;
-    }
+.field textarea {
+    min-height: 150px;  
 }

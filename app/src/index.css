@@ -1,0 +1,9 @@
+/* Variables */
+:root {
+  --main-orange: #F4A261;
+  --main-green: #114153;
+  --main-grey: #F5F5F8;
+
+  --transition-fast: 0.15s ease;
+  --transition-smooth: 0.25s ease;
+}
