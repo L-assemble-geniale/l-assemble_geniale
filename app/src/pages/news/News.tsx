@@ -3,7 +3,7 @@ import { deleteNews, getAllNews } from "../../services/NewsApi";
 import "./News.css";
 import type { News } from "../../entitées/NewEntity";
 import NewsModalForm from "../../components/newsModal/NewsModalForm";
-
+import { useAuth } from "../../contexts/useAuth";
 
 export default function NewsPage() {
   const [newsList, setNewsList] = useState<News[]>([]);
@@ -11,6 +11,8 @@ export default function NewsPage() {
   const [error, setError] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newsToEdit, setNewsToEdit] = useState<News | null>(null);
+  const { isAdmin } = useAuth();
+
 
   const openCreateModal = () => {
     setNewsToEdit(null);
@@ -32,19 +34,19 @@ export default function NewsPage() {
   };
 
   const handleDelete = async (id: number) => {
-  const confirmDelete = window.confirm(
-    "Voulez-vous vraiment supprimer cette actualité ?"
-  );
-  if (!confirmDelete) return;
+    const confirmDelete = window.confirm(
+      "Voulez-vous vraiment supprimer cette actualité ?"
+    );
+    if (!confirmDelete) return;
 
-  try {
-    await deleteNews(id);
-    setNewsList((prev) => prev.filter((n) => n.id !== id));
-  } catch (err) {
-    console.error("Erreur suppression actu :", err);
-    alert("Impossible de supprimer l’actualité");
-  }
-};
+    try {
+      await deleteNews(id);
+      setNewsList((prev) => prev.filter((n) => n.id !== id));
+    } catch (err) {
+      console.error("Erreur suppression actu :", err);
+      alert("Impossible de supprimer l’actualité");
+    }
+  };
 
   useEffect(() => {
     const fetchNews = async () => {
@@ -72,7 +74,13 @@ export default function NewsPage() {
 
   return (
     <div className="news-container">
-      <button onClick={openCreateModal}>Ajouter une actualité</button>
+      
+      {isAdmin && (
+        <>
+          <button onClick={openCreateModal}>Ajouter une actualité</button>
+        </>
+      )}
+
       {newsList.length === 0 ? (
         <p>Aucune actualité pour le moment.</p>
       ) : (
@@ -81,23 +89,29 @@ export default function NewsPage() {
             <li key={n.id} className="news-card">
               <div className="news-head">
                 <h2>{n.title}</h2>
-                <div className="modification-buttons">
-                  <button
-                    className="btn-edit-news"
-                    onClick={() => {
-                      setNewsToEdit(n);
-                      setIsModalOpen(true);
-                    }}
-                  >
-                    Modifier
-                  </button>
-                  <button
-                    className="btn-delete-news"
-                    onClick={() => handleDelete(n.id)}
-                  >
-                    Supprimer
-                  </button>
-                </div>
+
+                {isAdmin && (
+                  <>
+                    <div className="modification-buttons">
+                      <button
+                        className="btn-edit-news"
+                        onClick={() => {
+                          setNewsToEdit(n);
+                          setIsModalOpen(true);
+                        }}
+                      >
+                        Modifier
+                      </button>
+                      <button
+                        className="btn-delete-news"
+                        onClick={() => handleDelete(n.id)}
+                      >
+                        Supprimer
+                      </button>
+                    </div>
+                  </>
+                )}
+
               </div>
               <p>{n.text}</p>
               <div className="news-meta">
