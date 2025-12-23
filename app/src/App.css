@@ -1,0 +1,50 @@
+body {
+  font-family: "Lato", sans-serif;
+}
+
+h1 {
+  font-size: 2.5rem;
+  color: white;
+}
+
+h2 {
+  font-size: clamp(1.25rem, 1.175rem + 0.6vw, 2.1875rem);
+}
+
+p {
+  font-size: clamp(0.875rem, 0.845rem + 0.24vw, 1.25rem);
+}
+
+button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 60px;
+  border-radius: 3px;
+  background-color: var(--main-orange);
+  border: 3px solid var(--main-orange);
+  font-size: clamp(0.875rem, 0.845rem + 0.24vw, 1.25rem);
+  font-weight: 600;
+  cursor: pointer;
+
+  transition:
+    background-color var(--transition-smooth),
+    color var(--transition-smooth),
+    transform var(--transition-fast),
+    box-shadow var(--transition-smooth);
+}
+
+button:hover {
+  background-color: white;
+  color: var(--main-orange);
+}
+
+button:active {
+  transform: scale(0.96);
+}
+
+@media (max-width: 540px) {
+  button {
+    padding: 5px 30px !important;
+  }
+}

@@ -72,16 +72,14 @@ export default function NewsPage() {
 
   return (
     <div className="news-container">
-      <h1>Fil d’actualité</h1>
-
-      <button onClick={openCreateModal}>+</button>
+      <button onClick={openCreateModal}>Ajouter une actualité</button>
       {newsList.length === 0 ? (
         <p>Aucune actualité pour le moment.</p>
       ) : (
         <ul className="news-list">
           {newsList.map((n) => (
             <li key={n.id} className="news-card">
-              <div>
+              <div className="news-head">
                 <h2>{n.title}</h2>
                 <div className="modification-buttons">
                   <button
@@ -94,7 +92,7 @@ export default function NewsPage() {
                     Modifier
                   </button>
                   <button
-                    className="btn-edit-news"
+                    className="btn-delete-news"
                     onClick={() => handleDelete(n.id)}
                   >
                     Supprimer
