@@ -5,7 +5,7 @@ export default function ManageUsers() {
   const [open, setOpen] = useState(false);
 
   return (
-    <div style={{ padding: 16 }}>
+    <main style={{ padding: 16 }}>
       <div style={{ display: "flex", alignItems: "center", marginBottom: 16 }}>
         <h1 style={{ margin: 0 }}>Gestion de résidents</h1>
         <button
@@ -27,6 +27,6 @@ export default function ManageUsers() {
       </div>
 
       <InviteModal open={open} onClose={() => setOpen(false)} />
-    </div>
+    </main>
   );
 }
