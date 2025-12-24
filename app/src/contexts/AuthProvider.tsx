@@ -21,6 +21,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const refreshFromStorage = () => setAuth(readAuthFromStorage());
 
+  const login = (token: string, user: AuthUser) => {
+  localStorage.setItem("auth_token", token);
+  localStorage.setItem("auth_user", JSON.stringify(user));
+  setAuth({ token, user });
+};
+
   const logout = () => {
     localStorage.removeItem("auth_token");
     localStorage.removeItem("auth_user");
@@ -45,6 +51,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       isAdmin,
       residenceId,
       refreshFromStorage,
+      login,
       logout,
     };
   }, [token, user]);

@@ -12,5 +12,6 @@ export type AuthContextValue = {
   isAdmin: boolean;
   residenceId: number | null;
   refreshFromStorage: () => void;
+  login: (token: string, user: AuthUser) => void;
   logout: () => void;
 };
