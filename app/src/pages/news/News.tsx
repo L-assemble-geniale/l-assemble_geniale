@@ -73,7 +73,7 @@ export default function NewsPage() {
   if (error) return <p>Erreur : {error}</p>;
 
   return (
-    <div className="news-container">
+    <main className="news-container">
       
       {isAdmin && (
         <>
@@ -130,6 +130,6 @@ export default function NewsPage() {
         onSave={handleSave}
         newsToEdit={newsToEdit}
       />
-    </div>
+    </main>
   );
 }

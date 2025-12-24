@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import './App.css'
 import NotFound from './pages/404/notFound';
 import News from './pages/news/News';
@@ -21,28 +21,28 @@ export default function App() {
   }, []);
 
   return (
-    <Router>
-      <Routes>
-        {/* publiques */}
-        <Route path="/login" element={<Connexion />} />
-        <Route path="/register/syndic" element={<SyndicInscription />} />
-        <Route path="/register/:token" element={<InviteInscription />} />
+    <Routes>
+      {/* publiques */}
+      <Route path="/login" element={<Connexion />} />
+      <Route path="/register/syndic" element={<SyndicInscription />} />
+      <Route path="/register/:token" element={<InviteInscription />} />
 
-        {/* protégées */}
-        <Route element={<ProtectedRoute />}>
-          <Route index element={<News />} />
-          <Route path="/news" element={<News />} />
-          <Route path="/polls" element={<Polls />} />
-          <Route path="/events" element={<Events />} />
-          <Route path="/recommendations" element={<Category />} />
-          <Route path="/recommendations" element={<Recommandations />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/manage-users" element={<ManageUsers />} />
-        </Route>
+      {/* protégées */}
+      <Route element={<ProtectedRoute />}>
+        <Route index element={<News />} />
+        <Route path="/news" element={<News />} />
+        <Route path="/polls" element={<Polls />} />
+        <Route path="/events" element={<Events />} />
 
-        {/* 404 */}
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </Router>
+        <Route path="/recommendations-category" element={<Category />} />
+        <Route path="/recommendations" element={<Recommandations />} />
+
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/manage-users" element={<ManageUsers />} />
+      </Route>
+
+      {/* 404 */}
+      <Route path="*" element={<NotFound />} />
+    </Routes>
   );
 }
