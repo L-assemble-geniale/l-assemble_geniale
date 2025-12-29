@@ -1,0 +1,21 @@
+.connexion {
+    max-width: 80vw;
+}
+
+.login-form h2 {
+   font-size: clamp(1.5rem, 1.3889rem + 0.8889vw, 2.5rem); 
+   text-align: center;
+}
+
+.login-form button{
+    margin-bottom: 30px;
+}
+.register-link {
+    color: black;
+    transition: var(--transition-smooth);
+}
+
+.register-link:hover {
+    text-decoration: none;
+    color: var(--main-orange);
+}

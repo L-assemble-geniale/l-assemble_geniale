@@ -1,5 +1,22 @@
 .field select {
-    padding: 5px;
+    padding: 7px;
     border: 2px solid black;
     border-radius: 3px;
+}
+
+.result-box {
+    margin: 10px;
+}
+
+.result-box p{
+    margin: 10px;
+}
+
+.expire-date {
+    font-weight: 600;
+}
+
+.green {
+    color: var(--main-green);
+    font-weight: 400;
 }

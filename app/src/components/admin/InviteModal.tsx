@@ -37,7 +37,6 @@ export default function InviteModal({ open, onClose }: Props) {
   if (!open) return null;
 
   const isAdmin = role === "syndic";
-  const inviteUrl = result?.token ? `${window.location.origin}/register/${result.token}` : "";
 
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
@@ -67,25 +66,7 @@ export default function InviteModal({ open, onClose }: Props) {
     }
   }
 
-  async function copy() {
-    if (!inviteUrl) return;
-    try {
-      await navigator.clipboard.writeText(inviteUrl);
-      alert("Lien copié ✅");
-    } catch {
-      prompt("Copiez le lien :", inviteUrl);
-    }
-  }
 
-  function sendEmail() {
-    if (!inviteUrl) return;
-    const subject = encodeURIComponent("Invitation à rejoindre la résidence");
-    const roleTxt = isAdmin ? "syndic" : "résident";
-    const body = encodeURIComponent(
-      `Bonjour,\n\nVoici votre lien d'inscription en tant que ${roleTxt} :\n${inviteUrl}\n\nÀ bientôt !`
-    );
-    window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
-  }
 
   return (
     <div className="modal-overlay" onClick={onClose}>
@@ -139,14 +120,14 @@ export default function InviteModal({ open, onClose }: Props) {
         </form>
 
         {result?.token && (
-          <div className="resultBox">
-            <div className="resultLabel">Lien d'inscription généré </div>
+          <div className="result-box">
+            <p className="result-label">Lien d'inscription généré !</p>
 
             {result.expireAt && (
-              <div className="expireDate">
-                Expire le :{" "}
-                {new Date(result.expireAt).toLocaleString()}
-              </div>
+              <p className="expire-date">
+                Expire le : <span className="green">{" "}
+                {new Date(result.expireAt).toLocaleString()}</span>
+              </p>
             )}
           </div>
         )}
