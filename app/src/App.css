@@ -53,6 +53,19 @@ button:active {
   transform: scale(0.96);
 }
 
+.nav-link {
+  color: var(--main-green);
+  font-weight: 600;
+  font-size: clamp(0.875rem, 0.845rem + 0.24vw, 1.25rem);
+  margin: 15px 0;
+  transition: var(--transition-smooth);
+}
+
+.nav-link:hover {
+  text-decoration: none;
+  color: var(--main-orange);
+}
+
 @media (max-width: 540px) {
   button {
     padding: 5px 30px !important;

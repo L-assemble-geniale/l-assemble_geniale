@@ -4,7 +4,7 @@ import { useAuth } from "../../contexts/useAuth";
 import { useEffect, useState } from "react";
 
 function Header() {
-  const { isAdmin, isAuthenticated } = useAuth(); // 👈
+  const { isAdmin, isAuthenticated } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
@@ -15,7 +15,6 @@ function Header() {
     return () => window.removeEventListener("resize", onResize);
   }, []);
 
-  // Quand on se déconnecte, on ferme le menu et on évite un état "ouvert" caché
   useEffect(() => {
     if (!isAuthenticated) setMenuOpen(false);
   }, [isAuthenticated]);
@@ -25,7 +24,7 @@ function Header() {
   return (
     <header className="site-header">
       <div className="header-top">
-        {isAuthenticated && ( // ✅ burger seulement connecté
+        {isAuthenticated && (
           <button
             type="button"
             className={`menu-btn ${menuOpen ? "open" : ""}`}
