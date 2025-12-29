@@ -1,5 +1,8 @@
-body {
+* {
   font-family: "Lato", sans-serif;
+}
+
+body {
   margin: 0;
   position: relative;
 }
@@ -7,6 +10,9 @@ body {
 main {
   padding-top: 150px !important;
   max-width: 90vw;
+  padding: 2rem;
+  margin: auto;
+  min-height: 70vh;
 }
 
 h1 {
