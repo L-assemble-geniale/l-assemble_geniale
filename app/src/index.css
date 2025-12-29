@@ -28,6 +28,10 @@
   justify-content: center;
 }
 
+al-center {
+  align-items: center;
+}
+
 .txt-center {
   text-align: center;
 }

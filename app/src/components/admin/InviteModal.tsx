@@ -1,3 +1,5 @@
+import "./InviteModal.css";
+import "../modal/Modal.css";
 import { useEffect, useState } from "react";
 import type { FormEvent, ChangeEvent } from "react";
 import { createInvitation } from "../../services/AuthApi";
@@ -86,80 +88,64 @@ export default function InviteModal({ open, onClose }: Props) {
   }
 
   return (
-    <div
-      onClick={onClose}
-      style={{
-        position: "fixed", inset: 0, background: "rgba(0,0,0,.45)",
-        display: "grid", placeItems: "center", zIndex: 50
-      }}
-    >
+    <div className="modal-overlay" onClick={onClose}>
       <div
-        role="dialog" aria-modal="true"
+        className="modal-content column"
+        role="dialog"
+        aria-modal="true"
         onClick={(e) => e.stopPropagation()}
-        style={{
-          width: 600, maxWidth: "92vw", background: "white",
-          borderRadius: 16, boxShadow: "0 10px 40px rgba(0,0,0,.18)",
-          padding: 24
-        }}
       >
-        <div style={{ display: "flex", alignItems: "center", marginBottom: 12 }}>
-          <h2 style={{ margin: 0 }}>Créer un nouveau compte</h2>
-          <button onClick={onClose} aria-label="Fermer"
-            style={{ marginLeft: "auto", border: "none", background: "transparent", fontSize: 22, cursor: "pointer" }}>
+        <div className="modal-head">
+          <h2 className="txt-center">Créer un nouveau compte</h2>
+          <button className="modal-close" onClick={onClose} aria-label="Fermer">
             ×
           </button>
         </div>
 
-        <form onSubmit={onSubmit} style={{ display: "grid", gap: 12 }}>
-          <div>
-            <label style={{ fontSize: 14, display: "block", marginBottom: 6 }}>Adresse mail :</label>
-            <input type="email" value={email}
-              onChange={(e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
-              required placeholder="prenom.nom@mail.com"
-              style={{ width: "100%", padding: "10px 12px", borderRadius: 10, border: "1px solid #d1d5db" }}
+        <form className="form flex column" onSubmit={onSubmit}>
+
+          <label className="field">
+            Titre :
+            <input
+              type="email"
+              value={email}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                setEmail(e.target.value)
+              }
+              required
             />
-          </div>
+          </label>
 
-          <div>
-            <label style={{ fontSize: 14, display: "block", marginBottom: 6 }}>Rôle de l’invité :</label>
-            <select value={role} onChange={e => setRole(e.target.value as "resident" | "syndic")}
-              style={{ width: "100%", padding: "10px 12px", borderRadius: 10, border: "1px solid #d1d5db" }}>
+          <label className="field">
+            Rôle de l’invité :
+            <select
+              value={role}
+              onChange={(e) =>
+                setRole(e.target.value as "resident" | "syndic")
+              }
+            >
               <option value="resident">Résident</option>
-              <option value="syndic">Syndic (admin)</option>
+              <option value="syndic">Syndic</option>
             </select>
-          </div>
+          </label>
 
-          {error && <p style={{ color: "#b91c1c", margin: 0 }}>{error}</p>}
+          {error && <p className="error">{error}</p>}
 
-          <button type="submit" disabled={submitting}
-            style={{
-              padding: "10px 12px", borderRadius: 10, border: "none",
-              background: submitting ? "#9ca3af" : "#f59e0b", color: "white",
-              fontWeight: 700, cursor: "pointer", boxShadow: "0 2px 0 #c2410c"
-            }}>
-            {submitting ? "Envoi…" : "Envoyer le formulaire de création de compte"}
+          <button type="submit" disabled={submitting}>
+            {submitting
+              ? "Envoi…"
+              : "Envoyer le formulaire de création de compte"}
           </button>
         </form>
 
         {result?.token && (
-          <div style={{ marginTop: 14, background: "#f9fafb", border: "1px solid #e5e7eb", borderRadius: 12, padding: 12 }}>
-            <div style={{ fontSize: 14, marginBottom: 6 }}>Lien d’inscription généré :</div>
-            <div style={{ wordBreak: "break-all", fontFamily: "monospace", fontSize: 13 }}>
-              {inviteUrl}
-            </div>
-            <div style={{ display: "flex", gap: 8, marginTop: 8 }}>
-              <button onClick={copy}
-                style={{ padding: "6px 10px", borderRadius: 8, border: "1px solid #e5e7eb", cursor: "pointer" }}>
-                Copier le lien
-              </button>
-              <button onClick={sendEmail}
-                style={{ padding: "6px 10px", borderRadius: 8, border: "1px solid #e5e7eb", cursor: "pointer" }}>
-                Ouvrir dans l’e-mail
-              </button>
-            </div>
+          <div className="resultBox">
+            <div className="resultLabel">Lien d'inscription généré </div>
+
             {result.expireAt && (
-              <div style={{ fontSize: 12, opacity: .8, marginTop: 6 }}>
-                Expire le : {new Date(result.expireAt).toLocaleString()}
+              <div className="expireDate">
+                Expire le :{" "}
+                {new Date(result.expireAt).toLocaleString()}
               </div>
             )}
           </div>
