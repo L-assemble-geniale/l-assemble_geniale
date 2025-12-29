@@ -7,3 +7,27 @@
   --transition-fast: 0.15s ease;
   --transition-smooth: 0.25s ease;
 }
+
+.flex {
+  display: flex;
+}
+
+.column {
+  flex-direction: column;
+}
+
+.column-reverse {
+  flex-direction: column-reverse;
+}
+
+.space-around {
+  justify-content: space-around;
+}
+
+.center {
+  justify-content: center;
+}
+
+.txt-center {
+  text-align: center;
+}

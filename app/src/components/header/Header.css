@@ -32,19 +32,6 @@
   box-shadow: 0px 7px 57.2px rgba(0, 0, 0, 0.25);
 }
 
-.nav-link {
-  color: var(--main-green);
-  font-weight: 600;
-  font-size: clamp(0.875rem, 0.845rem + 0.24vw, 1.25rem);
-  margin: 15px 0;
-  transition: var(--transition-smooth);
-}
-
-.nav-link:hover {
-  text-decoration: none;
-  color: var(--main-orange);
-}
-
 .menu-btn {
   display: none;
   width: 40px;
@@ -57,7 +44,6 @@
   justify-content: space-between;
 }
 
-/* Les barres */
 .menu-btn span {
   display: block;
   height: 4px;
@@ -67,7 +53,6 @@
   transition: transform 0.25s ease, opacity 0.25s ease;
 }
 
-/* Animation quand ouvert (croix) */
 .menu-btn.open span:nth-child(1) {
   transform: translateY(14px) rotate(45deg);
 }
@@ -80,24 +65,20 @@
   transform: translateY(-14px) rotate(-45deg);
 }
 
-
-/* Nav mobile : caché sur desktop */
 .nav-mobile {
   display: none;
 }
 
-/* ---------- Responsive ---------- */
 @media (max-width: 900px) {
 
     .menu-btn {
     display: flex;
   }
-  /* On cache la nav desktop */
+  
   .nav-desktop {
     display: none;
   }
 
-  /* Nav mobile */
   .nav-mobile {
     display: none;
     background: white;
