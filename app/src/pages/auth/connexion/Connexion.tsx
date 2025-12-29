@@ -1,3 +1,4 @@
+import "./Connexion.css"
 import { useState } from "react";
 import type { FormEvent } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -70,46 +71,42 @@ export default function Connexion() {
   }
 
   return (
-    <div style={{ minHeight: "100dvh", display: "grid", placeItems: "center", padding: 24 }}>
-      <form onSubmit={onSubmit} style={{
-        width: 360, maxWidth: "92vw",
-        border: "1px solid #e5e7eb", borderRadius: 16, padding: 24,
-        boxShadow: "0 6px 24px rgba(0,0,0,.06)", background: "white"
-      }}>
-        <h1 style={{ marginBottom: 16, fontSize: 22 }}>Connexion</h1>
+    <main className="connexion">
+      <form className="login-form" onSubmit={onSubmit}>
+        <h2>Connexion</h2>
 
-        <label style={{ display: "block", fontSize: 14, marginBottom: 6 }}>Email</label>
-        <input
-          type="email" value={email} onChange={e => setEmail(e.target.value)}
-          required autoComplete="email" placeholder="prenom.nom@mail.com"
-          style={{ width: "100%", padding: "10px 12px", borderRadius: 10, border: "1px solid #d1d5db", marginBottom: 12 }}
-        />
+        <label className="field">Email
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            autoComplete="email"
+          />
+        </label>
 
-        <label style={{ display: "block", fontSize: 14, marginBottom: 6 }}>Mot de passe</label>
-        <input
-          type="password" value={password} onChange={e => setPassword(e.target.value)}
-          required autoComplete="current-password" minLength={6}
-          style={{ width: "100%", padding: "10px 12px", borderRadius: 10, border: "1px solid #d1d5db" }}
-        />
 
-        {error && <p style={{ color: "#b91c1c", marginTop: 12, marginBottom: 0 }}>{error}</p>}
+        <label className="field">Mot de passe
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            autoComplete="current-password"
+            minLength={6}
+          />
+        </label>
 
-        <button
-          type="submit" disabled={submitting}
-          style={{
-            marginTop: 16, width: "100%", padding: "10px 12px",
-            borderRadius: 10, border: "none", cursor: "pointer",
-            background: submitting ? "#9ca3af" : "#111827", color: "white",
-            fontWeight: 600
-          }}
-        >
+
+        {error && <p className="error">{error}</p>}
+
+        <button type="submit" disabled={submitting}>
           {submitting ? "Connexion…" : "Se connecter"}
         </button>
 
-        <div style={{ marginTop: 12, fontSize: 14, opacity: .8 }}>
-          <a href="/register/syndic" style={{ textDecoration: "underline" }}>Créer un compte syndic</a>
-        </div>
+        <br />
+        <a href="/register/syndic" className="register-link">Créer un compte et sa residence</a>
       </form>
-    </div>
+    </main>
   );
 }

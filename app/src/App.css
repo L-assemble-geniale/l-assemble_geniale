@@ -16,7 +16,7 @@ main {
 }
 
 h1 {
-  font-size: 2.5rem;
+  font-size: clamp(1.5625rem, 1.4583rem + 0.8333vw, 2.5rem);
   font-weight: 800;
   color: white;
   margin: 0;

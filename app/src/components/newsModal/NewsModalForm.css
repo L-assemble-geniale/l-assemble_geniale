@@ -11,7 +11,7 @@
 
 .field {
     font-weight: 600;
-    font-size: 1.25rem;
+    font-size: clamp(1rem, 0.9722rem + 0.2222vw, 1.25rem);
     display: flex;
     flex-direction: column;
     gap: 0.625rem;
