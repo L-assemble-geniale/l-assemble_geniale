@@ -77,52 +77,64 @@ export default function InviteInscription() {
     form.password;
 
   return (
-    <div style={{ minHeight: "100dvh", display: "grid", placeItems: "center", padding: 24 }}>
-      <form onSubmit={onSubmit} style={{
-        width: 460, maxWidth: "92vw",
-        border: "1px solid #e5e7eb", borderRadius: 16, padding: 24,
-        boxShadow: "0 6px 24px rgba(0,0,0,.06)", background: "white"
-      }}>
-        <h1 style={{ marginBottom: 12 }}>Compléter mon inscription</h1>
-        <p style={{ fontSize: 14, opacity: .8, marginTop: -6 }}>
-          Votre compte sera rattaché à la résidence et au rôle définis par le syndic.
-        </p>
+    <main className="inscription-container">
+      <h2 className="txt-center">Compléter mon inscription</h2>
+      <form onSubmit={onSubmit} className="flex column">
 
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginTop: 12 }}>
-          <input {...bind("lastName")} placeholder="Nom *" required
-            style={{ padding: "10px 12px", borderRadius: 10, border: "1px solid #d1d5db" }} />
-          <input {...bind("firstName")} placeholder="Prénom *" required
-            style={{ padding: "10px 12px", borderRadius: 10, border: "1px solid #d1d5db" }} />
-        </div>
+        <section>
+          <label className="field">Nom
+            <input
+              {...bind("lastName")}
+              required
+            />
+          </label>
+          <label className="field">Prénom
+            <input
+              {...bind("firstName")}
+              required
+            />
+          </label>
+          <label className="field">Email
+            <input
+              {...bind("email")}
+              type="email"
+              required
+            /></label>
+          <label className="field">Mot de passe
+            <input
+              {...bind("password")}
+              type="password"
+              required
+              minLength={6}
+            />
+          </label>
+          <label className="field">Numéro de téléphone <span className="orange">(optionnel)</span>
+            <input
+              {...bind("phoneNumber")}
+            />
+          </label>
+          <label className="field">Âge <span className="orange">(optionnel)</span>
+            <input
+              {...bind("age")}
+              type="number"
+            />
+          </label>
+          <label className="field">N° d'appartement <span className="orange">(optionnel)</span>
+            <input
+              {...bind("appartmentNumber")}
+            />
+          </label>
+        </section>
 
-        <input {...bind("email")} type="email" placeholder="Email *" required
-          style={{ width: "100%", marginTop: 8, padding: "10px 12px", borderRadius: 10, border: "1px solid #d1d5db" }} />
+        {error && <p className="error">{error}</p>}
 
-        <input {...bind("password")} type="password" placeholder="Mot de passe *" required minLength={6}
-          style={{ width: "100%", marginTop: 8, padding: "10px 12px", borderRadius: 10, border: "1px solid #d1d5db" }} />
-
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginTop: 8 }}>
-          <input {...bind("phoneNumber")} placeholder="Téléphone (optionnel)"
-            style={{ padding: "10px 12px", borderRadius: 10, border: "1px solid #d1d5db" }} />
-          <input {...bind("age")} type="number" placeholder="Âge (optionnel)"
-            style={{ padding: "10px 12px", borderRadius: 10, border: "1px solid #d1d5db" }} />
-        </div>
-
-        <input {...bind("appartmentNumber")} placeholder="N° d'appartement (optionnel)"
-          style={{ width: "100%", marginTop: 8, padding: "10px 12px", borderRadius: 10, border: "1px solid #d1d5db" }} />
-
-        {error && <p style={{ color: "#b91c1c", marginTop: 12 }}>{error}</p>}
-
-        <button type="submit" disabled={submitting || !requiredOK}
-          style={{
-            marginTop: 16, width: "100%", padding: "10px 12px",
-            borderRadius: 10, border: "none", cursor: "pointer",
-            background: submitting || !requiredOK ? "#9ca3af" : "#111827",
-            color: "white", fontWeight: 600
-          }}>
+        <button
+          type="submit"
+          disabled={submitting || !requiredOK}
+        >
           {submitting ? "Création…" : "Créer mon compte"}
         </button>
       </form>
-    </div>
+    </main>
   );
 }
