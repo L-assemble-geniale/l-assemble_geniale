@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { AuthContext } from "./auth.context";
 import type { AuthUser, AuthContextValue } from "./auth.types";
+import { setToken } from "../services/AuthApi";
 
 function readAuthFromStorage() {
   const token = localStorage.getItem("auth_token");
@@ -18,6 +19,10 @@ function readAuthFromStorage() {
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [{ token, user }, setAuth] = useState(() => readAuthFromStorage());
+
+    useEffect(() => {
+    setToken(token);
+  }, [token]);
 
   const refreshFromStorage = () => setAuth(readAuthFromStorage());
 
