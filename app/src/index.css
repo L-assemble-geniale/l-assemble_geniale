@@ -35,3 +35,12 @@ al-center {
 .txt-center {
   text-align: center;
 }
+
+.orange {
+  color: var(--main-orange);
+  display: contents;
+}
+
+.margin-auto {
+  margin: auto;
+}
