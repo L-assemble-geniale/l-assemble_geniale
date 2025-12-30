@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "./auth.css"
 import type { FormEvent, ChangeEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { isAxiosError } from "axios";
@@ -96,62 +97,109 @@ export default function SyndicInscription() {
     form.password;
 
   return (
-    <div style={{ minHeight: "100dvh", display: "grid", placeItems: "center", padding: 24 }}>
-      <form onSubmit={onSubmit} style={{
-        width: 460, maxWidth: "92vw",
-        border: "1px solid #e5e7eb", borderRadius: 16, padding: 24,
-        boxShadow: "0 6px 24px rgba(0,0,0,.06)", background: "white"
-      }}>
-        <h1 style={{ marginBottom: 12 }}>Créer ma copro (Syndic)</h1>
+    <main className="inscription-container flex column al-center">
+      <h2 className="txt-center">Créer ma copro et mon compte syndic</h2>
+      <form className="first-form flex column" onSubmit={onSubmit}>
 
-        <h3 style={{ marginTop: 10, marginBottom: 8 }}>Résidence</h3>
-        <input {...bind("residenceName")} placeholder="Nom de la résidence *"
-          required style={{ width: "100%", padding: "10px 12px", borderRadius: 10, border: "1px solid #d1d5db", marginBottom: 8 }} />
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 2fr", gap: 8 }}>
-          <input {...bind("streetNumber")} placeholder="N° *"
-            required style={{ padding: "10px 12px", borderRadius: 10, border: "1px solid #d1d5db" }} />
-          <input {...bind("streetName")} placeholder="Rue *"
-            required style={{ padding: "10px 12px", borderRadius: 10, border: "1px solid #d1d5db" }} />
-        </div>
-        <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: 8, marginTop: 8 }}>
-          <input {...bind("city")} placeholder="Ville *"
-            required style={{ padding: "10px 12px", borderRadius: 10, border: "1px solid #d1d5db" }} />
-          <input {...bind("postalCode")} placeholder="Code postal *" inputMode="numeric"
-            required style={{ padding: "10px 12px", borderRadius: 10, border: "1px solid #d1d5db" }} />
+        <div className="field-container flex">
+          <section className="admin-form">
+            {/* admin */}
+            <h3>
+              Vos informations (syndic)
+            </h3>
+
+            <label className="field">Nom
+              <input {...bind("lastName")} />
+            </label>
+
+            <label className="field">Prénom
+              <input {...bind("firstName")} />
+            </label>
+
+            <label className="field">Email
+              <input
+                {...bind("email")}
+                type="email"
+                required
+              />
+            </label>
+            <label className="field">Mot de passe
+              <input
+                {...bind("password")}
+                type="password"
+                minLength={6}
+                required
+              />
+            </label>
+            <label className="field">Numéro de téléphone <span className="orange">(optionnel)</span>
+              <input
+                {...bind("phoneNumber")}
+              />
+            </label>
+            <label className="field">Age <span className="orange">(optionnel)</span>
+              <input
+                {...bind("age")}
+                type="number"
+              />
+            </label>
+            <label className="field">Numéro d'appartement <span className="orange">(optionnel)</span>
+              <input
+                {...bind("appartmentNumber")}
+              />
+            </label>
+          </section>
+
+          <section className="residence-form">
+            {/* Residence */}
+            <h3>Résidence</h3>
+
+            <label className="field">Nom de la residence
+              <input
+                {...bind("residenceName")}
+                required
+              />
+            </label>
+
+            <label className="field">Numero de rue
+              <input
+                {...bind("streetNumber")}
+                required
+              />
+            </label>
+
+            <label className="field">Nom de rue
+              <input
+                {...bind("streetName")}
+                required
+              />
+            </label>
+
+            <label className="field">Ville
+              <input {...bind("city")}
+                required
+              />
+            </label>
+
+            <label className="field">Code postal
+              <input
+                {...bind("postalCode")}
+                inputMode="numeric"
+                required
+              />
+            </label>
+          </section>
         </div>
 
-        <h3 style={{ marginTop: 16, marginBottom: 8 }}>Vos informations (syndic)</h3>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
-          <input {...bind("lastName")} placeholder="Nom *"
-            required style={{ padding: "10px 12px", borderRadius: 10, border: "1px solid #d1d5db" }} />
-          <input {...bind("firstName")} placeholder="Prénom *"
-            required style={{ padding: "10px 12px", borderRadius: 10, border: "1px solid #d1d5db" }} />
-        </div>
-        <input {...bind("email")} type="email" placeholder="Email *"
-          required style={{ width: "100%", marginTop: 8, padding: "10px 12px", borderRadius: 10, border: "1px solid #d1d5db" }} />
-        <input {...bind("password")} type="password" placeholder="Mot de passe *" minLength={6}
-          required style={{ width: "100%", marginTop: 8, padding: "10px 12px", borderRadius: 10, border: "1px solid #d1d5db" }} />
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginTop: 8 }}>
-          <input {...bind("phoneNumber")} placeholder="Téléphone (optionnel)"
-            style={{ padding: "10px 12px", borderRadius: 10, border: "1px solid #d1d5db" }} />
-          <input {...bind("age")} type="number" placeholder="Âge (optionnel)"
-            style={{ padding: "10px 12px", borderRadius: 10, border: "1px solid #d1d5db" }} />
-        </div>
-        <input {...bind("appartmentNumber")} placeholder="N° d'appartement (optionnel)"
-          style={{ width: "100%", marginTop: 8, padding: "10px 12px", borderRadius: 10, border: "1px solid #d1d5db" }} />
+        {error && <p className="error">{error}</p>}
 
-        {error && <p style={{ color: "#b91c1c", marginTop: 12 }}>{error}</p>}
-
-        <button type="submit" disabled={submitting || !requiredOK}
-          style={{
-            marginTop: 16, width: "100%", padding: "10px 12px",
-            borderRadius: 10, border: "none", cursor: "pointer",
-            background: submitting || !requiredOK ? "#9ca3af" : "#111827",
-            color: "white", fontWeight: 600
-          }}>
+        <button
+          className="form-button"
+          type="submit"
+          disabled={submitting || !requiredOK}>
           {submitting ? "Création…" : "Créer mon compte"}
         </button>
+
       </form>
-    </div>
+    </main>
   );
 }

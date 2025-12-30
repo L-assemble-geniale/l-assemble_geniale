@@ -1,0 +1,41 @@
+.inscription-container {
+    width: 80vw;
+}
+
+.inscription-container h2 {
+     font-size: clamp(1.5rem, 1.3889rem + 0.8889vw, 2.5rem);
+     margin-top: 0;
+}
+
+.inscription-container h3 {
+    font-size: clamp(1.25rem, 1.2153rem + 0.2778vw, 1.5625rem);
+}
+
+.field-container {
+    width: 100%;
+    justify-content: space-between;
+}
+
+.field-container section {
+    width: 45%;
+    margin-bottom: 30px;
+}
+
+.admin-form h3 {
+    color: var(--main-green);
+}
+
+.residence-form h3 {
+    color: var(--main-orange);
+}
+
+@media (max-width: 600px) {
+    .field-container {
+        flex-direction: column-reverse;
+    }
+
+    .field-container section {
+        width: 100%;
+    }
+}
+
