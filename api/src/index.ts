@@ -1,36 +1,11 @@
-import express from "express";
-import cors from 'cors';
 import appDataSource from "./data-source";
-import residenceRouter from "./routes/ResidenceRoutes";
-import authRouter from "./routes/AuthRoutes";
-import invitationRouter from "./routes/InvitationRoutes";
-import newsRouter from "./routes/NewsRoutes";
+import { createApp } from "./app";
 
 appDataSource.initialize().then(() => {
+  const app = createApp();
 
-    //Parameters
-    const app = express();
-
-    app.use(express.json());
-    app.use(
-        cors({
-            origin: "*",
-            methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
-        })
-    );
-    app.use(express.json());
-
-    //Routes
-    app.use("/api/residence", residenceRouter);
-    app.use("/api/user", authRouter);
-    app.use("/api/user", invitationRouter);
-    app.use("/api/news", newsRouter);
-
-    const port = process.env.PORT || 8080;
-    app.listen(port, () => {
-        console.log(`API is running on port : ${port}`);
-    });
-})
-    .catch((err) => {
-        console.log(`Une erreur s'est produite :`, err);
-    });
+  const port = process.env.PORT;
+  app.listen(port, () => console.log(`API is running on port : ${port}`));
+}).catch((err) => {
+  console.log(`Une erreur s'est produite :`, err);
+});
