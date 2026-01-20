@@ -1,16 +1,45 @@
 version: "3.9"
-
 services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: assemblee-postgres
+    environment:
+      POSTGRES_DB: assemblee
+      POSTGRES_USER: assemblee
+      POSTGRES_PASSWORD: assemblee
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U assemblee -d assemblee"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
   api:
     build: ./api
+    container_name: assemblee-api
     ports:
       - "8080:8080"
     environment:
-      - PORT=8080
+      PORT: 8080
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USERNAME: assemblee
+      DB_PASSWORD: assemblee
+      DB_NAME: assemblee
+    depends_on:
+      postgres:
+        condition: service_healthy
 
   app:
     build: ./app
+    container_name: assemblee-app
     ports:
       - "5173:5173"
     depends_on:
       - api
+
+volumes:
+  pgdata:

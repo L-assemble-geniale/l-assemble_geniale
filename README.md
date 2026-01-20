@@ -89,6 +89,15 @@ Le projet est organisé sous forme de **monorepo**, avec deux sous-dossiers prin
 
 ---
 
+## DevOps & Industrialisation
+
+- CI avec GitHub Actions
+- Lint automatisé (ESLint)
+- Tests automatisés (Jest)
+- Build & run via Docker
+
+---
+
 ## Lancement du projet en local (Docker)
 
 ### Prérequis

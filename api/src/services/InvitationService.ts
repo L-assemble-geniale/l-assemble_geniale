@@ -30,7 +30,7 @@ export class InvitationService {
     });
     await this.invitationRepo.save(invitation);
 
-    const baseUrl = process.env.FRONT_BASE_URL || "http://localhost:5173";
+    const baseUrl = process.env.FRONT_BASE_URL;
     const inviteUrl = `${baseUrl}/register/${token}`;
 
     await this.mailer.sendInvitation(email, sender.residence.name, inviteUrl);
