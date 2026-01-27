@@ -5,6 +5,7 @@ import residenceRouter from "./routes/ResidenceRoutes";
 import authRouter from "./routes/AuthRoutes";
 import invitationRouter from "./routes/InvitationRoutes";
 import newsRouter from "./routes/NewsRoutes";
+import memberRouter from "./routes/MemberRoutes";
 
 export function createApp() {
   const app = express();
@@ -24,6 +25,7 @@ export function createApp() {
   app.use("/api/user", authRouter);
   app.use("/api/user", invitationRouter);
   app.use("/api/news", newsRouter);
+  app.use("/api/members", memberRouter);
 
   return app;
 }
