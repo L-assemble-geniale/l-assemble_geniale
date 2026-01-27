@@ -1,0 +1,26 @@
+.members-list {
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 0;
+}
+
+.member-card {
+    list-style: none;
+    width: 40%;
+    border-left: 7px solid var(--main-green);
+    border-radius: 5px;
+    padding: 20px 30px;
+    box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.25);
+    background: #F5F5F8;
+}
+
+.member-main {
+    gap: 20px;
+}
+
+@media (max-width: 900px) {
+  .member-card {
+    width: 90%;
+  }  
+}
