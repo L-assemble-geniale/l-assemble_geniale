@@ -15,6 +15,20 @@ export class MemberController {
     }
   }
 
+  // GET /api/members/me
+  async getMe(req: Request, res: Response) {
+    try {
+      const userId = (req as any).userId as number;
+      const me = await this.memberService.getById(userId);
+      if (!me) return res.status(404).send({ status: "Failed", message: "Membre introuvable" });
+
+      res.send({ status: "OK", data: me });
+    } catch (error) {
+      res.status(500).send({ status: "Failed", message: error });
+    }
+  }
+
+
   // modification profil
   async updateMe(req: Request, res: Response) {
     try {

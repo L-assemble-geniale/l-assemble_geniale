@@ -26,7 +26,7 @@ export class AuthService {
         return this.authRepository.find();
     };
 
-    //Get all users by id 
+    //Get user by id 
     async getById(id: number) {
         console.log("UserService");
         return this.authRepository.findOneBy({ id: id });

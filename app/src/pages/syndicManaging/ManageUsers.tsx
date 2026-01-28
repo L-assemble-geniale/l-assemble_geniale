@@ -2,7 +2,7 @@ import "./ManageUser.css";
 import { useEffect, useState } from "react";
 import InviteModal from "../../components/admin/InviteModal";
 import { useAuth } from "../../contexts/useAuth";
-import { getResidenceMembers } from "../../services/MemberApi";
+import { deleteMember, getResidenceMembers } from "../../services/MemberApi";
 import type { Member } from "../../entitées/MemberEntity";
 
 export default function ManageUsers() {
@@ -12,6 +12,7 @@ export default function ManageUsers() {
   const [members, setMembers] = useState<Member[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const { user } = useAuth();
 
   useEffect(() => {
     const fetchMembers = async () => {
@@ -31,6 +32,21 @@ export default function ManageUsers() {
     if (isAdmin) fetchMembers();
     else setLoading(false);
   }, [token, isAdmin]);
+
+  const handleDeleteMember = async (id: number) => {
+    if (!token) return;
+
+    const ok = window.confirm("Voulez-vous vraiment supprimer ce membre ?");
+    if (!ok) return;
+
+    try {
+      await deleteMember(token, id);
+      setMembers((prev) => prev.filter((m) => m.id !== id));
+    } catch (err) {
+      console.error("Erreur suppression membre :", err);
+      alert("Impossible de supprimer le membre");
+    }
+  };
 
   return (
     <main>
@@ -53,11 +69,18 @@ export default function ManageUsers() {
         ) : (
           <ul className="members-list flex">
             {members.map((m) => (
-              <li key={m.id} className="member-card">
-                <div className="member-main flex">                  
-                  <strong>{m.firstName} {m.lastName}</strong>   
-                  {m.isAdmin && <span className="badge-admin">Syndic</span>}               
-                </div>                
+              <li key={m.id} className="member-card flex">
+                <div className="member-main flex">
+                  <h3>{m.firstName} {m.lastName}</h3>
+                  {m.isAdmin && <p className="orange">Syndic</p>}
+                </div>
+                {m.id !== user?.id && (<button
+                  type="button"
+                  className="btn-delete-news btn-delete"
+                  onClick={() => handleDeleteMember(m.id)}
+                >
+                  Supprimer
+                </button>)}
               </li>
             ))}
           </ul>

@@ -24,6 +24,10 @@
   justify-content: space-around;
 }
 
+.space-between {
+  justify-content: space-between;
+}
+
 .center {
   justify-content: center;
 }
@@ -43,4 +47,8 @@ al-center {
 
 .margin-auto {
   margin: auto;
+}
+
+.strong {
+  font-weight: 800;
 }

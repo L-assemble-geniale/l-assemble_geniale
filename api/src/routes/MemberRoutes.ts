@@ -7,9 +7,14 @@ import { isSyndic } from "../middlewares/SyndicMiddleware";
 const memberRouter = Router();
 const memberController = new MemberController();
 
-// recupérer membre d'une residence
+// recupérer membres d'une residence
 memberRouter.get("/", isAuth, requireResidence, isSyndic, (req, res) => {
   memberController.getAllByResidence(req, res);
+});
+
+// recupérer profil
+memberRouter.get("/me", isAuth, (req, res) => {
+  memberController.getMe(req, res);
 });
 
 // modification profil

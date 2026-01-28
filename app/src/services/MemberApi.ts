@@ -9,3 +9,9 @@ export async function getResidenceMembers(token: string): Promise<Member[]> {
   });
   return res.data.data;
 }
+
+export async function deleteMember(token: string, id: number): Promise<void> {
+  await axios.delete(`${API_URL}/${id}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+}
