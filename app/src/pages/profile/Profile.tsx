@@ -50,6 +50,11 @@ export default function Profile() {
     }
   };
 
+  const handleLogout = () => {
+    logout();
+    navigate("/login", { replace: true });
+  };
+
   if (loading) {
     return (
       <main className="profile-page">
@@ -125,13 +130,14 @@ export default function Profile() {
       </section>
 
       <section className="profile-action flex space-between" aria-label="Actions du compte">
-        <button type="button" className="btn-secondary" onClick={logout}>
+        <button type="button" className="btn-secondary" onClick={handleLogout}>
           Déconnexion
         </button>
 
+
         <button type="button" className="btn-danger" onClick={handleDeleteAccount}>
           Supprimer mon compte
-        </button>        
+        </button>
       </section>
 
       <ProfileEditModal
