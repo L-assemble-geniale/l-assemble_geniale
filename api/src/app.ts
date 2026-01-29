@@ -6,6 +6,8 @@ import authRouter from "./routes/AuthRoutes";
 import invitationRouter from "./routes/InvitationRoutes";
 import newsRouter from "./routes/NewsRoutes";
 import memberRouter from "./routes/MemberRoutes";
+import recommandationRoutes from "./routes/RecommendationRoutes";
+import categoryRouter from "./routes/CategoryRoutes";
 
 export function createApp() {
   const app = express();
@@ -26,6 +28,8 @@ export function createApp() {
   app.use("/api/user", invitationRouter);
   app.use("/api/news", newsRouter);
   app.use("/api/members", memberRouter);
+  app.use("/api/recommandations", recommandationRoutes);
+  app.use("/api/categories", categoryRouter);
 
   return app;
 }
